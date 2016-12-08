@@ -26,19 +26,17 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/getAuthor', function(req, res) {
 	console.log("Hello Author");
-
+	var env = process.env;
 	console.log("VCAP");
-	console.log(process.env);
-	var username = 'wim@antwerpportauthority.be';
-	var password = 'wbid01bm';
-	var authData =  "Basic " + new Buffer(username + ":" + password).toString("base64");
+	console.log(env);
+	var authData =  "Basic " + new Buffer(env.USERNAME + ":" + env.PASSWORD).toString("base64");
 	var options = {
 		url: 'https://api.us.apiconnect.ibmcloud.com/aazraqegibmcom-svp-dev/chain2-catalog/SVPService/locations',
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/xml',
 			'Authorization':authData,
-			'x-ibm-client-id':'078bd6b7-dfcc-4c58-8b6c-061b731e9129'
+			'x-ibm-client-id': env.CLIENT_ID
 		},
 		form: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsdl="http://svp.poc.com/wsdl"><soapenv:Header/><soapenv:Body><wsdl:locations/></soapenv:Body></soapenv:Envelope>'
 	};
