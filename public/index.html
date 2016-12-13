@@ -2,25 +2,41 @@
 <html>
 
   <head>
-    <title>NodeJS Starter Application</title>
+    <title>Berthing Time Predication</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/style.css">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>
+	<script>
+		function calculate() {
+			$.get('/getAuthor', function(data) {
+				console.log('success');
+				console.log(data);
+			});
+		}
+	</script>
   </head>
 
   <body>
-    <table>
-      <tr>
-        <td style= "width:30%;">
-          <img class = "newappIcon" src="images/newapp-icon.png">
-        </td>
-        <td>
-          <h1 id="message">Hello World!</h1>
-          <p class='description'></p> Thanks for creating a <span class = "blue">NodeJS Starter Application</span>.
-        </td>
-      </tr>
-    </table>
+    <div class="header">Berthing Time Prediction</div>
+	<div class="container">
+		<table class="content">
+			<tr>
+				<td>
+					<input type="text" name="name" placeholder="Object ID" />
+					<button class="button" onclick="calculate()">Calculate</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="weather">
+						<input type="checkbox" name="weather" /> Take weather condition into consideration
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
   </body>
 
 </html>
