@@ -34,31 +34,32 @@ app.get('/calculateETB', function(req, res) {
 	console.log(objectId);
 	var isWeather = req.query.isWeather;
 	console.log(isWeather);
-	if(!isWeather || !objectId) {
+	if (!isWeather || !objectId) {
 		res.status(400).send();
 	}
-	if (isWeather == 'true') {
-		res.send('Weather');
-	} else {
-		etbCalculator.queryEvent(objectId, function(error, event) {
-			if (error) {
-				console.log(error);
-				res.status(500).send();
+
+	etbCalculator.queryEvent(objectId, function(error, event) {
+		if (error) {
+			console.log(error);
+			res.status(500).send();
+		} else {
+			console.log("I am back");
+			console.log(event);
+
+			if (isWeather) {
+				etbCalculator.calculateETBWithWeather(event, function(etb){
+					res.send(etb);
+				});
 			} else {
-				console.log("I am back");
-				console.log(event);
-
-				if (isWeather === 'on') {
-
-				} else {
-					var etb = etbCalculator.calculateETB(event);
-				}
-
+				var etb = etbCalculator.calculateETB(event);
 				res.send(etb);
 			}
 
-		});
-	}
+			
+		}
+
+	});
+
 });
 
 

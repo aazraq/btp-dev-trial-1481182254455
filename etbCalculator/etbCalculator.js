@@ -48,11 +48,11 @@ exports.calculateETB = function(event) {
 exports.calculateETBWithWeather = function(event, callback){
 	var eta = new Date(event.additionalInfo.$);
 	var location = getLocation(event);
-	getWeatherSpeedForecast(location, function(e,windSpeed){
+	getWeatherSpeedForecast(location, function(windSpeed){
 		var beaufortSpeed = convertMphToBeaufort(windSpeed);
 		var etb = addSubtractDate.add(eta, AVERAGE_BERTHING_TIME, "hours");
 		etb =  addSubtractDate.add(etb, AVERAGE_BERTHING_TIME*beaufortSpeed*0.05, "hours");
-		c
+		callback(etb);
 		
 	});
 };
