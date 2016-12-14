@@ -20,7 +20,7 @@
 					$('#result').html('Estimated time of berthing is ' + data);
 				},
 				error: function(data) {
-					$('#error').html('Could not load resutls for ' + objectId + ", please try again!");
+					$('#result').html('<div class="error">Could not load resutls for ' + objectId + ', please try again!</div>');
 				}
 			});
 		}
@@ -37,8 +37,7 @@
 		<div class="row">
 			<input type="checkbox" id="isWeather" /> Take weather condition into consideration
 		</div>
-		<div class="row result" id="result"/>
-		<div class="row result error" id="error" />
+		<div class="row result" id="result"></div>
 	</div>
   </body>
 
