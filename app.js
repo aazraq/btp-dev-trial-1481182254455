@@ -29,17 +29,21 @@ var etbCalculator = require('./etbCalculator');
 app.use(express.static(__dirname + '/public'));
 
 
-app.post('/calculateETB', function(req, res) {
-	var objectId = req.body.objectId;
+app.get('/calculateETB', function(req, res) {
+	var objectId = req.query.objectId;
 	console.log(objectId);
-	var isWeather = req.body.isWeather;
+	var isWeather = req.query.isWeather;
 	console.log(isWeather);
-	if (isWeather !== null && isWeather === 'on') {
+	if(!isWeather || !objectId) {
+		res.status(400).send();
+	}
+	if (isWeather == 'true') {
 		res.send('Weather');
 	} else {
 		etbCalculator.queryEvent(objectId, function(error, event) {
 			if (error) {
-				res.send('Please try again');
+				console.log(error);
+				res.status(500).send();
 			} else {
 				console.log("I am back");
 				console.log(event);

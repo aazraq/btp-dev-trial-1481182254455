@@ -8,29 +8,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/style.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>
+	<script>
+		function calculate() {
+			var objectId = $('#objectId').val();
+			var isWeather = $('#isWeather').is(':checked');
+			
+			$.ajax({
+				url: '/calculateETB',
+				data: {objectId: objectId, isWeather: isWeather },
+				success: function(data) {
+					$('#result').html('Estimated time of berthing is ' + data);
+				},
+				error: function(data) {
+					$('#result').html('<div class="error">Could not load resutls for ' + objectId + ', please try again!</div>');
+				}
+			});
+		}
+	</script>
   </head>
 
   <body>
     <div class="header">Berthing Time Prediction</div>
 	<div class="container">
-		<table class="content">
-			<form action="calculateETB" method="post">
-				<tr>
-					<td>
-							<input type="text" name="objectId" placeholder="Object ID" value="urn:svp:vsid:MSK000021"/>
-							
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="weather">
-							<input type="checkbox" name="isWeather" /> Take weather condition into consideration
-							<input type="submit" value="Calculate"/>
-						</div>
-					</td>
-				</tr>
-			</form>
-		</table>
+		<div class="row">
+			<input type="text" id="objectId" placeholder="Object ID" value="urn:svp:vsid:MSK000021"/>
+			<button class="button" onclick="calculate()">Calculate</button>
+		</div>
+		<div class="row">
+			<input type="checkbox" id="isWeather" /> Take weather condition into consideration
+		</div>
+		<div class="row result" id="result"></div>
 	</div>
   </body>
 
