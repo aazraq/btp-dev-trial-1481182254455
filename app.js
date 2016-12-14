@@ -43,7 +43,13 @@ app.post('/calculateETB', function(req, res) {
 			} else {
 				console.log("I am back");
 				console.log(event);
-				var etb = etbCalculator.calculateETB(event);
+
+				if (isWeather === 'on') {
+
+				} else {
+					var etb = etbCalculator.calculateETB(event);
+				}
+
 				res.send(etb);
 			}
 
