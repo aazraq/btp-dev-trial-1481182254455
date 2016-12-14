@@ -8,8 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/style.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>
-<<<<<<< Upstream, based on b7628374f8997adf183bff5878af17580e8e6f1f
-=======
 	<script>
 		function calculate() {
 			var objectId = $('#objectId').val();
@@ -27,32 +25,11 @@
 			});
 		}
 	</script>
->>>>>>> 9ef8c35 Integrated front-end with node back-end + adjusted error handling from node.js
   </head>
 
   <body>
     <div class="header">Berthing Time Prediction</div>
 	<div class="container">
-<<<<<<< Upstream, based on b7628374f8997adf183bff5878af17580e8e6f1f
-		<table class="content">
-			<form action="calculateETB" method="post">
-				<tr>
-					<td>
-							<input type="text" name="objectId" placeholder="Object ID" value="urn:svp:vsid:MSK000021"/>
-							
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="weather">
-							<input type="checkbox" name="isWeather" /> Take weather condition into consideration
-							<input type="submit" value="Calculate"/>
-						</div>
-					</td>
-				</tr>
-			</form>
-		</table>
-=======
 		<div class="row">
 			<input type="text" id="objectId" placeholder="Object ID" value="urn:svp:vsid:MSK000021"/>
 			<button class="button" onclick="calculate()">Calculate</button>
@@ -62,7 +39,6 @@
 		</div>
 		<div class="row result" id="result"/>
 		<div class="row result error" id="error" />
->>>>>>> 9ef8c35 Integrated front-end with node back-end + adjusted error handling from node.js
 	</div>
   </body>
 
