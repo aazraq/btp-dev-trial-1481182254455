@@ -1,5 +1,4 @@
-/*eslint-env node, express*/
-
+/*eslint-env node */
 //------------------------------------------------------------------------------
 // node.js starter application for Bluemix
 //------------------------------------------------------------------------------
@@ -22,8 +21,8 @@ var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser());
 
+// Call the module required for the calculation of ETB
 var etbCalculator = require('./etbCalculator');
-
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
@@ -31,9 +30,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/calculateETB', function(req, res) {
 	var objectId = req.query.objectId;
-	console.log(objectId);
 	var isWeather = req.query.isWeather;
-	console.log(isWeather);
 	if (!isWeather || !objectId) {
 		res.status(400).send();
 	}
@@ -43,28 +40,17 @@ app.get('/calculateETB', function(req, res) {
 			console.log(error);
 			res.status(500).send();
 		} else {
-			console.log("I am back");
-			console.log(event);
-
-			if (isWeather) {
+			if (isWeather==='true') { //Calculate ETB taking weather condition into consideration
 				etbCalculator.calculateETBWithWeather(event, function(etb){
 					res.send(etb);
 				});
-			} else {
+			} else { // Calculate ETB without taking weather condition
 				var etb = etbCalculator.calculateETB(event);
 				res.send(etb);
-			}
-
-			
+			}			
 		}
-
 	});
-
 });
-
-
-
-
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
