@@ -8,33 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/style.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>
-	<script>
-		function calculate() {
-			$.get('/getAuthor', function(data) {
-				console.log('success');
-				console.log(data);
-			});
-		}
-	</script>
   </head>
 
   <body>
     <div class="header">Berthing Time Prediction</div>
 	<div class="container">
 		<table class="content">
-			<tr>
-				<td>
-					<input type="text" name="name" placeholder="Object ID" />
-					<button class="button" onclick="calculate()">Calculate</button>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="weather">
-						<input type="checkbox" name="weather" /> Take weather condition into consideration
-					</div>
-				</td>
-			</tr>
+			<form action="calculateETB" method="post">
+				<tr>
+					<td>
+							<input type="text" name="objectId" placeholder="Object ID" value="urn:svp:vsid:MSK000021"/>
+							
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="weather">
+							<input type="checkbox" name="isWeather" /> Take weather condition into consideration
+							<input type="submit" value="Calculate"/>
+						</div>
+					</td>
+				</tr>
+			</form>
 		</table>
 	</div>
   </body>

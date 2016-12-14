@@ -18,40 +18,40 @@ var appEnv = cfenv.getAppEnv();
 // create a new express server
 var app = express();
 
-var httpRequest = require('request');
+// Allow passing parameters
+var bodyParser = require('body-parser');
+app.use(bodyParser());
+
+var etbCalculator = require('./etbCalculator');
+
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
 
-app.get('/getAuthor', function(req, res) {
-	console.log("Hello Author");
+app.post('/calculateETB', function(req, res) {
+	var objectId = req.body.objectId;
+	console.log(objectId);
+	var isWeather = req.body.isWeather;
+	console.log(isWeather);
+	if (isWeather !== null && isWeather === 'on') {
+		res.send('Weather');
+	} else {
+		etbCalculator.queryEvent(objectId, function(error, event) {
+			if (error) {
+				res.send('Please try again');
+			} else {
+				console.log("I am back");
+				console.log(event);
+				var etb = etbCalculator.calculateETB(event);
+				res.send(etb);
+			}
 
-	console.log("VCAP");
-	console.log(process.env);
-	var username = 'wim@antwerpportauthority.be';
-	var password = 'wbid01bm';
-	var authData =  "Basic " + new Buffer(username + ":" + password).toString("base64");
-	var options = {
-		url: 'https://api.us.apiconnect.ibmcloud.com/aazraqegibmcom-svp-dev/chain2-catalog/SVPService/locations',
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/xml',
-			'Authorization':authData,
-			'x-ibm-client-id':'078bd6b7-dfcc-4c58-8b6c-061b731e9129'
-		},
-		form: '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsdl="http://svp.poc.com/wsdl"><soapenv:Header/><soapenv:Body><wsdl:locations/></soapenv:Body></soapenv:Envelope>'
-	};
-	httpRequest(
-		options,
-		function(error, response, body) {
-				console.log("body");
-				console.log(body);
-				console.log("error");
-				console.log(error);
-		}
-	);
+		});
+	}
 });
+
+
 
 
 
