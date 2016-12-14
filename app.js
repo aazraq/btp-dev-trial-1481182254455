@@ -22,7 +22,13 @@ var bodyParser = require('body-parser');
 app.use(bodyParser());
 
 // Call the module required for the calculation of ETB
-var etbCalculator = require('./etbCalculator');
+var etbCalculator = require('./modules/etbCalculator');
+
+// Call the module required for the calculation of ETB taking into consideration the weather condition
+var etbCalculatorWeather = require('./modules/etbCalculatorWeather');
+
+// Call the module required for dealing with SVP Functionalities
+var svpClient = require('./modules/svpClient');
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
@@ -35,14 +41,13 @@ app.get('/calculateETB', function(req, res) {
 		res.status(400).send();
 	}
 
-	etbCalculator.queryEvent(objectId, function(error, event) {
+	svpClient.queryEvent(objectId, function(error, event) {
 		if (error) {
-			console.log(error);
 			res.status(500).send();
 		} else {
 			if (isWeather==='true') { //Calculate ETB taking weather condition into consideration
-				etbCalculator.calculateETBWithWeather(event, function(etb){
-					res.send(etb);
+				etbCalculatorWeather.calculateETBWithWeather(event, function(etb){
+					res.send(etb.etb + "; a delay is estimated because of a windspeed " + etb.windSpeed + " MPH");
 				});
 			} else { // Calculate ETB without taking weather condition
 				var etb = etbCalculator.calculateETB(event);
