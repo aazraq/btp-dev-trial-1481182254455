@@ -29,6 +29,7 @@ var etbCalculator = require('./etbCalculator');
 app.use(express.static(__dirname + '/public'));
 
 
+<<<<<<< Upstream, based on b7628374f8997adf183bff5878af17580e8e6f1f
 app.post('/calculateETB', function(req, res) {
 	var objectId = req.body.objectId;
 	console.log(objectId);
@@ -40,6 +41,23 @@ app.post('/calculateETB', function(req, res) {
 		etbCalculator.queryEvent(objectId, function(error, event) {
 			if (error) {
 				res.send('Please try again');
+=======
+app.get('/calculateETB', function(req, res) {
+	var objectId = req.query.objectId;
+	console.log(objectId);
+	var isWeather = req.query.isWeather;
+	console.log(isWeather);
+	if(!isWeather || !objectId) {
+		res.status(400).send();
+	}
+	if (isWeather == 'true') {
+		res.send('Weather');
+	} else {
+		etbCalculator.queryEvent(objectId, function(error, event) {
+			if (error) {
+				console.log(error);
+				res.status(500).send();
+>>>>>>> 9ef8c35 Integrated front-end with node back-end + adjusted error handling from node.js
 			} else {
 				console.log("I am back");
 				console.log(event);
