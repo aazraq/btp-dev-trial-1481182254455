@@ -33,6 +33,12 @@ var svpClient = require('./modules/svpClient');
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
+//The client ID retrieved from API Connect 
+var apiConnectClientId = 'cb73fb49-b5ba-43cf-974c-47f10138d6f7';
+
+//Weather Company Endpoint
+var weatherCompanyEndpoint = "https://5fc68d04-df6d-418d-8154-6abab22f5b12:T433d4vTeb@twcservice.mybluemix.net";
+
 
 app.get('/calculateETB', function(req, res) {
 	var objectId = req.query.objectId;
@@ -41,12 +47,12 @@ app.get('/calculateETB', function(req, res) {
 		res.status(400).send();
 	}
 
-	svpClient.queryEvent(objectId, function(error, event) {
+	svpClient.queryEvent(objectId,apiConnectClientId, function(error, event) {
 		if (error) {
 			res.status(500).send();
 		} else {
 			if (isWeather==='true') { //Calculate ETB taking weather condition into consideration
-				etbCalculatorWeather.calculateETBWithWeather(event, function(etb){
+				etbCalculatorWeather.calculateETBWithWeather(event, weatherCompanyEndpoint, function(etb){
 					res.send(etb.etb + "; a delay is estimated because of a windspeed " + etb.windSpeed + " MPH");
 				});
 			} else { // Calculate ETB without taking weather condition

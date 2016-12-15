@@ -7,8 +7,7 @@ var addSubtractDate = require("add-subtract-date");
 
 
 
-//Weather Company Endpoint
-var weatherCompanyEndpoint = "https://5fc68d04-df6d-418d-8154-6abab22f5b12:T433d4vTeb@twcservice.mybluemix.net";
+
 
 //A constant specifying the average time from Antwerp pilot station to terminal A
 var AVERAGE_BERTHING_TIME = 2;
@@ -48,8 +47,9 @@ function getLocation(event) {
 	return location;
 };
 
+
 //Queries Weather Company for the forecast of the weather speed at the specified location
-function getWindSpeedForecast(location, callback) {
+function getWindSpeedForecast(location,weatherCompanyEndpoint,  callback) {
 	var options = {
 		url: weatherCompanyEndpoint + '/api/weather/v1/geocode/' + location.latidude + '/' + location.longitude + '/forecast/hourly/48hour.json'
 	};
