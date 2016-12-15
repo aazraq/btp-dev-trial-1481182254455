@@ -14,7 +14,7 @@ var AVERAGE_BERTHING_TIME = 2;
 
 
 //Calculate Estimated Time of Berthing Taking into consideration the current weather at the destination
-exports.calculateETBWithWeather = function(event, callback) {
+exports.calculateETBWithWeather = function(event,weatherCompanyEndpoint, callback) {
 	//Get the ETA from the queried event in SVP
 	var eta = new Date(event.additionalInfo.$);
 	
@@ -22,7 +22,7 @@ exports.calculateETBWithWeather = function(event, callback) {
 	var location = getLocation(event);
 	
 	//Get the WindSpeed forecast for the specific location through calling Weather Company
-	getWindSpeedForecast(location, function(e, windSpeed) {
+	getWindSpeedForecast(location, weatherCompanyEndpoint, function(e, windSpeed) {
 		var etbWithWeather = {};
 		etbWithWeather.windSpeed = windSpeed;
 		var beaufortSpeed = convertMphToBeaufort(windSpeed);
