@@ -6,7 +6,7 @@ var httpRequest = require('request');
 var username = 'wim@antwerp.port.authority.be';
 var password = 'wbid01bm';
 var authData = "Basic " + new Buffer(username + ":" + password).toString("base64");
-var svpQueryEventEndpoint = 'https://api.us.apiconnect.ibmcloud.com/aazraqegibmcom-svp-dev/chain2-catalog/SVPService/queryEvent';
+var svpQueryEventEndpoint = 'https://api.us.apiconnect.ibmcloud.com/aazraqegibmcom-svp-dev/chain2-catalog/pcv-service/queryEvent';
 
 
 //queries SVP for Event
